@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫老师</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="showcase">
+      <div class="phone-shell" aria-label="猫老师手机软件原型">
+        <div class="status-bar" aria-hidden="true">
+          <span>10:14</span>
+          <span>●●●  5G  ▰</span>
+        </div>
+
+        <main class="phone-screen">
+          <section class="screen active auth-choice" id="authChoiceScreen">
+            <div class="decor decor-one"></div>
+            <div class="decor decor-two"></div>
+            <div class="auth-mascot">
+              <canvas id="authCatCanvas" width="260" height="220" aria-hidden="true"></canvas>
+            </div>
+            <p class="eyebrow">AI 学业陪伴</p>
+            <h1>猫老师</h1>
+            <p class="auth-copy">登录后，让猫老师帮你拆目标、安排时间、陪你开始。</p>
+            <div class="auth-actions">
+              <button class="primary-button" id="showRegisterBtn" type="button">注册</button>
+              <button class="secondary-button" id="showLoginBtn" type="button">登陆</button>
+            </div>
+          </section>
+
+          <section class="screen form-screen" id="registerScreen">
+            <button class="back-button" type="button" data-back-auth>‹</button>
+            <p class="eyebrow">创建账号</p>
+            <h2>告诉猫老师你是谁</h2>
+            <label>
+              年龄
+              <input id="registerAge" type="number" min="10" max="20" placeholder="例如：15" />
+            </label>
+            <label>
+              年级
+              <select id="registerGrade">
+                <option value="">请选择年级</option>
+                <option>初一</option>
+                <option>初二</option>
+                <option>初三</option>
+                <option>高一</option>
+                <option>高二</option>
+                <option>高三</option>
+              </select>
+            </label>
+            <label>
+              ID
+              <input id="registerId" placeholder="设置你的 ID" />
+            </label>
+            <label>
+              密码
+              <input id="registerPassword" type="password" placeholder="设置密码" />
+            </label>
+            <button class="primary-button" id="createAccountBtn" type="button">创建账号</button>
+          </section>
+
+          <section class="screen form-screen" id="loginScreen">
+            <button class="back-button" type="button" data-back-auth>‹</button>
+            <p class="eyebrow">欢迎回来</p>
+            <h2>登陆猫老师</h2>
+            <label>
+              账号 ID
+              <input id="loginId" placeholder="输入你的 ID" />
+            </label>
+            <label>
+              密码
+              <input id="loginPassword" type="password" placeholder="输入密码" />
+            </label>
+            <button class="primary-button" id="loginBtn" type="button">登陆</button>
+          </section>
+
+          <section class="screen app-home" id="homeScreen">
+            <header class="home-header">
+              <div>
+                <p class="eyebrow">Today</p>
+                <h2 id="homeGreeting">你好，小鱼同学</h2>
+              </div>
+              <div class="home-actions">
+                <button class="avatar-button" id="homeAvatarBtn" type="button" aria-label="进入我的主页">
+                  <span id="homeAvatarInitial">小</span>
+                  <img id="homeAvatarImage" alt="" hidden />
+                </button>
+                <button class="tree-shortcut" id="homeTreeBtn" type="button">目标树</button>
+              </div>
+            </header>
+
+            <section class="cat-card">
+              <div class="cat-stage">
+                <canvas id="catCanvas" width="360" height="280" aria-label="猫老师"></canvas>
+                <div class="cat-bubble" id="catBubble">在的～有什么能帮助你的吗？</div>
+              </div>
+            </section>
+
+            <section class="chat-card">
+              <div class="section-title">
+                <div>
+                  <p class="eyebrow">AI Chat</p>
+                  <h3>和猫老师对话</h3>
+                </div>
+                <button class="text-button" id="clearChatBtn" type="button">清空</button>
+              </div>
+              <div class="chat-log" id="chatLog" aria-live="polite"></div>
+              <div class="quick-prompts">
+                <button type="button" data-prompt="你好">你好</button>
+                <button type="button" data-prompt="数学函数题不会做，应该从哪开始？">函数题</button>
+                <button type="button" data-prompt="今天不想学怎么办？">不想学</button>
+              </div>
+              <form class="chat-form" id="chatForm">
+                <textarea id="chatInput" rows="2" placeholder="问猫老师：在吗？函数题怎么做？怎么开始学习？"></textarea>
+                <button class="send-button" id="sendChatBtn" type="button">发送</button>
+              </form>
+            </section>
+
+            <section class="today-card">
+              <div>
+                <p class="eyebrow">Daily Action</p>
+                <h3>今日最小行动</h3>
+                <p id="todayActionText">打开数学错题本，只圈出第一道题的扣分原因。</p>
+              </div>
+              <button class="primary-button" id="completeTodayBtn" type="button">完成今天</button>
+            </section>
+
+            <section class="feature-grid" aria-label="学习功能入口">
+              <button class="feature-card" id="openDiagnosisBtn" type="button" data-study-mode="diagnosis">
+                <strong>学业诊断</strong>
+                <span>输入目标，找出卡点</span>
+              </button>
+              <button class="feature-card" id="openPlanBtn" type="button" data-study-mode="plan">
+                <strong>时间规划</strong>
+                <span>生成今天的学习节奏</span>
+              </button>
+              <button class="feature-card" id="openSolutionBtn" type="button" data-study-mode="solution">
+                <strong>解决方案</strong>
+                <span>拆成能开始的步骤</span>
+              </button>
+              <button class="feature-card" id="openTreeCardBtn" type="button">
+                <strong>目标树</strong>
+                <span>完成行动让树长大</span>
+              </button>
+            </section>
+          </section>
+
+          <section class="screen study-screen" id="studyScreen">
+            <header class="page-header">
+              <button class="back-button" type="button" data-go-home>‹</button>
+              <h2 id="studyPageTitle">学业中心</h2>
+            </header>
+
+            <section class="study-hero">
+              <p class="eyebrow">Study System</p>
+              <h3 id="studyModeTitle">输入目标，生成诊断</h3>
+              <p id="studyModeCopy">把“我要提高成绩”变成今天能开始、能安排、能复盘的行动。</p>
+            </section>
+
+            <section class="input-card" id="studyInputCard">
+              <label>
+                输入你的目标
+                <textarea id="studyGoalInput" rows="4" placeholder="例如：90 天内把数学从 92 分提高到 115 分"></textarea>
+              </label>
+              <label>
+                年级
+                <select id="studyGradeSelect">
+                  <option>初一</option>
+                  <option>初二</option>
+                  <option>初三</option>
+                  <option>高一</option>
+                  <option>高二</option>
+                  <option>高三</option>
+                </select>
+              </label>
+              <label>
+                主要科目
+                <select id="studySubjectSelect">
+                  <option>数学</option>
+                  <option>英语</option>
+                  <option>语文</option>
+                  <option>物理</option>
+                  <option>化学</option>
+                  <option>综合复习</option>
+                </select>
+              </label>
+              <label>
+                现在最卡在哪里
+                <select id="studyStateSelect">
+                  <option>知道要学，但开始困难</option>
+                  <option>任务太多，不知道先做什么</option>
+                  <option>时间混乱，计划经常失败</option>
+                  <option>基础薄弱，做题容易卡住</option>
+                  <option>容易焦虑，复盘不稳定</option>
+                </select>
+              </label>
+              <div class="study-two-col">
+                <label>
+                  每天可用小时
+                  <input id="studyHoursInput" type="number" min="1" max="12" value="6" />
+                </label>
+                <label>
+                  考试倒计时
+                  <input id="studyExamDaysInput" type="number" min="1" max="365" value="90" />
+                </label>
+              </div>
+              <div class="study-actions">
+                <button class="primary-button" id="generateStudyBtn" type="button">生成学业诊断</button>
+                <button class="secondary-button" id="saveStudyGoalBtn" type="button">保存为我的目标</button>
+              </div>
+            </section>
+
+            <section class="result-card" id="diagnosisPanel">
+              <p class="eyebrow">Diagnosis</p>
+              <h3>学业诊断</h3>
+              <div id="diagnosisResult" class="result-list"></div>
+            </section>
+
+            <section class="result-card" id="solutionPanel">
+              <p class="eyebrow">Solution</p>
+              <h3>解决方案</h3>
+              <div id="solutionResult" class="result-list"></div>
+            </section>
+
+            <section class="result-card" id="planPanel">
+              <p class="eyebrow">Daily Plan</p>
+              <div class="calendar-header">
+                <h3>AI 时间日历</h3>
+                <select id="planRangeSelect" aria-label="选择规划范围">
+                  <option value="daily">每日规划</option>
+                  <option value="monthly">这个月的规划</option>
+                  <option value="yearly">这一年的规划</option>
+                </select>
+              </div>
+              <div id="planEmptyState" class="empty-state">你还没有规划内容</div>
+              <div id="calendarGrid" class="calendar-grid"></div>
+              <div id="planResult" class="timeline-list"></div>
+            </section>
+          </section>
+
+          <section class="screen profile-screen" id="profileScreen">
+            <header class="page-header">
+              <button class="back-button" type="button" data-go-home>‹</button>
+              <h2>我的主页</h2>
+            </header>
+            <div class="profile-card">
+              <button class="profile-avatar" id="profileAvatarBtn" type="button">
+                <span id="profileAvatarInitial">小</span>
+                <img id="profileAvatarImage" alt="" hidden />
+              </button>
+              <label>
+                更改 ID
+                <input id="profileIdInput" />
+              </label>
+              <label>
+                上传头像
+                <input id="profileAvatarUpload" type="file" accept="image/*" />
+              </label>
+              <label>
+                设定自己的目标
+                <textarea id="profileGoalInput" rows="5"></textarea>
+              </label>
+              <button class="primary-button" id="saveProfileBtn" type="button">保存主页</button>
+            </div>
+          </section>
+
+          <section class="screen tree-screen" id="treeScreen">
+            <header class="page-header">
+              <button class="back-button" type="button" data-go-home>‹</button>
+              <h2>目标树</h2>
+            </header>
+            <p class="tree-intro">每天完成学习行动，小树会慢慢长大；长期没有完成，它会变得没精神。</p>
+            <div class="forest-card">
+              <div class="sky-dot"></div>
+              <div class="cloud cloud-a"></div>
+              <div class="cloud cloud-b"></div>
+              <div id="treeArtwork" class="tree-artwork"></div>
+              <div class="grass"></div>
+            </div>
+            <div class="tree-info">
+              <strong id="treeStageText">小树苗</strong>
+              <p id="treeHealthText">今天完成一个小行动，它就会长大一点。</p>
+            </div>
+            <div class="tree-actions">
+              <button class="primary-button" id="treeCompleteBtn" type="button">完成今日行动</button>
+              <button class="secondary-button" id="treeMissBtn" type="button">今天没完成</button>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
